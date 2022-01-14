@@ -1,6 +1,6 @@
 module.exports = {
    parser: '@babel/eslint-parser',
-   plugins: ['@babel'],
+   // plugins: ['@babel'],
    parserOptions: {
       babelOptions: {
          configFile: './babel.config.json',
@@ -16,5 +16,7 @@ module.exports = {
       semi: 'off',
       'comma-dangle': 'off',
       'require-jsdoc': 'off',
+      indent: ['error', 3],
+      'quote-props': ['off', 'always'],
    },
 }
