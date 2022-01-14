@@ -48,8 +48,8 @@ module.exports = (env, argv) => {
       devServer: {
          port: '3000',
          open: true,
-         hot: true,
-         // watchFiles: './',
+         // hot: true,
+         watchFiles: './',
       },
       resolve: {
          extensions: ['.js', '.json'],
