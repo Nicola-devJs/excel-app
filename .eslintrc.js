@@ -18,5 +18,11 @@ module.exports = {
       'require-jsdoc': 'off',
       indent: ['error', 3],
       'quote-props': ['off', 'always'],
+      'object-curly-spacing': ['error', 'always', { objectsInObjects: true }],
+      'operator-linebreak': [
+         'error',
+         'after',
+         { overrides: { '?': 'before', ':': 'before' } },
+      ],
    },
 }
