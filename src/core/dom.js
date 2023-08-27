@@ -1,6 +1,6 @@
 class Dom {
    constructor(selector) {
-      this.$el =
+      this.$elem =
          typeof selector === 'string'
             ? document.querySelector(selector)
             : selector
@@ -8,10 +8,10 @@ class Dom {
 
    html(html) {
       if (typeof html === 'string') {
-         this.$el.innerHTML = html
+         this.$elem.innerHTML = html
          return this
       }
-      return this.$el.outerHTML.trim()
+      return this.$elem.outerHTML.trim()
    }
 
    clear() {
@@ -20,23 +20,18 @@ class Dom {
    }
 
    on(eventType, callback) {
-      this.$el.addEventListener(eventType, callback)
+      this.$elem.addEventListener(eventType, callback)
    }
 
    off(eventType, callback) {
-      this.$el.removeEventListener(eventType, callback)
+      this.$elem.removeEventListener(eventType, callback)
    }
 
    append(node) {
       if (node instanceof Dom) {
-         node = node.$el
+         node = node.$elem
       }
-      if (Element.prototype.append) {
-         this.$el.append(node)
-      } else {
-         this.$el.appendChild(node)
-      }
-
+      this.$elem.append(node)
       return this
    }
 }
@@ -45,10 +40,16 @@ export function $(selector) {
    return new Dom(selector)
 }
 
-$.create = (tagName, classes = '') => {
-   const el = document.createElement(tagName)
-   if (classes) {
-      el.classList.add(classes)
+$.create = function (tagName, classes) {
+   const element = document.createElement(tagName)
+
+   if (typeof classes === 'string') {
+      element.classList.add(classes)
+   } else if (Array.isArray(classes)) {
+      element.classList.add(...classes)
+   } else {
+      return $(element)
    }
-   return $(el)
+
+   return $(element)
 }

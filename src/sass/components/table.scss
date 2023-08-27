@@ -11,7 +11,16 @@
       height: $row_height;
       display: flex;
       flex-direction: row;
+
+      &:first-child {
+         position: fixed;
+      }
+
+      &:nth-child(2) {
+         margin-top: $row_height;
+      }
    }
+
    .row-info {
       display: flex;
       justify-content: center;

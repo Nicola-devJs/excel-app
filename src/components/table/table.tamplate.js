@@ -3,43 +3,45 @@ const CODES = {
    Z: 90,
 }
 
-function createCell(_) {
-   return `<div class="cell" contenteditable>${_}</div>`
+function toCell() {
+   return `<div class="cell" contenteditable></div>`
 }
 
-function createCol(col) {
-   return `<div class="column">${col}</div>`
-}
-
-function createRow(index, content) {
+function toColumn(char) {
    return `
-      <div class="row">
-         <div class="row-info">${index ? index : ''}</div>
-         <div class="row-data">${content}</div>
-      </div>
+      <div class="column">${char}</div>
    `
 }
 
-function toChar(_, index) {
+function createRow(numRow, content) {
+   return `
+   <div class="row">
+      <div class="row-info">${numRow ?? ''}</div>
+      <div class="row-data">${content}</div>
+   </div>
+   `
+}
+
+const toChar = (_, index) => {
    return String.fromCharCode(CODES.A + index)
 }
 
-export function createTable(rowsCount = 15) {
-   const colsCount = CODES.Z - CODES.A + 1
+export function createTable(rowsCount = 20) {
+   const countCols = CODES.Z - CODES.A + 1
    const rows = []
 
-   const cols = new Array(colsCount)
+   const headlines = new Array(countCols)
       .fill('')
       .map(toChar)
-      .map(createCol)
+      .map(toColumn)
       .join('')
 
-   rows.push(createRow(null, cols))
+   const cells = new Array(countCols).fill('').map(toCell).join('')
 
-   const cells = new Array(colsCount).fill('').map(createCell).join('')
+   rows.push(createRow(null, headlines))
 
-   for (let i = 0; i < rowsCount; i++) {
-      rows.push(createRow(i + 1, cells))
+   for (let i = 1; i <= rowsCount; i++) {
+      rows.push(createRow(i, cells))
    }
    return rows.join('')
 }

@@ -7,20 +7,18 @@ export class Excel {
    }
 
    getRoot() {
+      //! Создает корневой узел
+
       const $root = $.create('div', 'excel')
-
       this.components = this.components.map((Component) => {
-         const $el = $.create('div', Component.className)
-
-         const component = new Component($el)
-
+         const $wrap_component = $.create('div', Component.className)
+         const component = new Component($wrap_component)
          if (component.name) {
             window['c' + component.name] = component
          }
+         $wrap_component.html(component.toHTML())
 
-         $el.html(component.toHTML())
-         $root.append($el)
-
+         $root.append($wrap_component)
          return component
       })
 
@@ -28,6 +26,7 @@ export class Excel {
    }
 
    render() {
+      //! Отображает корневой узел
       this.$el.append(this.getRoot())
       this.components.forEach((component) => component.init())
    }
