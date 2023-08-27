@@ -13,9 +13,10 @@ export class Excel {
       this.components = this.components.map((Component) => {
          const $wrap_component = $.create('div', Component.className)
          const component = new Component($wrap_component)
-         if (component.name) {
-            window['c' + component.name] = component
-         }
+         // Debag
+         // if (component.name) {
+         //    window['c' + component.name] = component
+         // }
          $wrap_component.html(component.toHTML())
 
          $root.append($wrap_component)
