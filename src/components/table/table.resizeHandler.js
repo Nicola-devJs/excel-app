@@ -1,13 +1,13 @@
 import { $ } from '../../core/dom'
 
 export function resizeHandler($root, event) {
+   const resizeType = event.target.dataset.resize
    const $resizer = $(event.target)
    const $parent = $resizer.closest('[data-type="resizable"]')
    const coords = $parent.getCoords()
    const cells = $root.$elem.querySelectorAll(
       `[data-col="${$parent.data.col}"]`
    )
-   const resizeType = event.target.dataset.resize
 
    let valueCol
    let valueRow
@@ -19,15 +19,21 @@ export function resizeHandler($root, event) {
       if (resizeType === 'col') {
          const deltaX = e.pageX - coordsPageX
          valueCol = coords.width + deltaX
-         $(event.target).css({ transform: `translateX(${deltaX}px)` })
+         $resizer.css({
+            transform: `translateX(${deltaX}px)`,
+            opacity: 1,
+            height: '100vh',
+         })
       }
       if (resizeType === 'row') {
          const deltaY = e.pageY - coordsPageY
          valueRow = coords.height + deltaY
-         $(event.target).css({ transform: `translateY(${deltaY}px)` })
+         $resizer.css({
+            transform: `translateY(${deltaY}px)`,
+            opacity: 1,
+            width: '100vw',
+         })
       }
-
-      event.target.classList.add('selected')
    }
 
    document.onmouseup = () => {
@@ -35,12 +41,19 @@ export function resizeHandler($root, event) {
       if (resizeType === 'col') {
          $parent.css({ width: valueCol + 'px' })
          cells.forEach((el) => $(el).css({ width: valueCol + 'px' }))
-         $(event.target).css({ transform: 'translateX(0px)' })
+         $resizer.css({
+            transform: 'translateX(0px)',
+            opacity: 0,
+            height: '100%',
+         })
       }
       if (resizeType === 'row') {
          $parent.css({ height: valueRow + 'px' })
-         $(event.target).css({ transform: 'translateY(0px)' })
+         $resizer.css({
+            transform: 'translateY(0px)',
+            opacity: 0,
+            width: '100%',
+         })
       }
-      event.target.classList.remove('selected')
    }
 }
