@@ -27,12 +27,29 @@ class Dom {
       this.$elem.removeEventListener(eventType, callback)
    }
 
+   css(styles = {}) {
+      Object.assign(this.$elem.style, styles)
+      return this
+   }
+
    append(node) {
       if (node instanceof Dom) {
          node = node.$elem
       }
       this.$elem.append(node)
       return this
+   }
+
+   get data() {
+      return this.$elem.dataset
+   }
+
+   closest(selector) {
+      return $(this.$elem.closest(selector))
+   }
+
+   getCoords() {
+      return this.$elem.getBoundingClientRect()
    }
 }
 
