@@ -15,14 +15,14 @@ class Dom {
    }
 
    text(text) {
-      if (typeof text === 'string') {
+      if (typeof text === 'string' || typeof text === 'number') {
          this.$elem.textContent = text
          return this
-      }
-      if (this.$elem.tagName.toLowerCase() === 'input') {
+      } else if (this.$elem.tagName.toLowerCase() === 'input') {
          return this.$elem.value.trim()
+      } else {
+         return this.$elem.textContent.trim()
       }
-      return this.$elem.textContent.trim()
    }
 
    clear() {
@@ -43,12 +43,27 @@ class Dom {
       return this
    }
 
+   getStyles(styles = []) {
+      return styles.reduce((res, s) => {
+         res[s] = this.$elem.style[s]
+         return res
+      }, {})
+   }
+
    append(node) {
       if (node instanceof Dom) {
          node = node.$elem
       }
       this.$elem.append(node)
       return this
+   }
+
+   attr(name, value) {
+      if (value) {
+         this.$elem.setAttribute(name, value)
+         return this
+      }
+      return this.$elem.getAttribute(name)
    }
 
    get data() {
