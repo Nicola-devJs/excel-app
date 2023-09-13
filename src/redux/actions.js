@@ -4,9 +4,9 @@ import {
    CHANGE_TEXT,
    CHANGE_TITLE,
    TABLE_RESIZE,
+   UPDATE_DATE,
 } from './types'
 
-// Actions Creators
 export function tableResize(data) {
    return {
       type: TABLE_RESIZE,
@@ -39,5 +39,11 @@ export function changeTitle(data) {
    return {
       type: CHANGE_TITLE,
       data,
+   }
+}
+
+export function updateDate() {
+   return {
+      type: UPDATE_DATE,
    }
 }
