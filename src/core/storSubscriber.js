@@ -30,6 +30,6 @@ export class storeSubscriber {
 
    unsubscribeFromStore() {
       //* Деактивация всех состояний текущей подписки корневого компонента
-      this.sub.unsibscribe()
+      this.sub.unsubscribe()
    }
 }
